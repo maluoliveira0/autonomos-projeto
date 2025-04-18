@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: autonomos
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppass
+    ports:
+      - '3306:3306'
+    volumes:
+      - dbdata:/var/lib/mysql
+
+  api:
+    build: .
+    container_name: autonomos-api
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "mysql://appuser:apppass@db:3306/autonomos"
+      JWT_SECRET: "sua_senha_secreta"
+    command: sh -c "npx prisma migrate deploy && npm start"
+
+volumes:
+  dbdata:
