@@ -4,7 +4,7 @@
 
 ### Garanta que as dependências estejam instaladas
 
-1. Garanta que está com o node versão >20.9 rodando.
+1. Garanta que está com o node versão >=20.9.0 rodando.
 
 ### Servidor e Banco de dados
 
